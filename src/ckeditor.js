@@ -175,7 +175,7 @@ DecoupledEditor.defaultConfig = {
 	},
 	fontSize: {
 		options: [
-			8, 10, 12, 'default', 20, 24, 28
+			8, 10, 12, 'default', 16, 18, 20, 24, 28
 		]
 	},
 	fontFamily: {
