@@ -175,22 +175,16 @@ DecoupledEditor.defaultConfig = {
 	},
 	fontSize: {
 		options: [
-			8, 10, 12, 'default', 16, 18, 20, 24, 28
+			8, 10, 12, 14, 'default', 18, 20, 24, 28
 		]
 	},
 	fontFamily: {
 		options: [
-			'Serif',
-			'Sans-serif',
-			'Monospace',
-			'Cursive'
+			'Arial, Helvetica, sans-serif',
+			'Courier New, Courier, monospace',
+			'Times New Roman, Times, serif',
+			'Comic sans, Comic sans MS, cursive',
+			'Verdana, Geneva, sans-serif'
 		]
 	}
 };
-{
-	// eslint-disable-next-line no-undef
-	const dictionary = window.CKEDITOR_TRANSLATIONS.ru.dictionary;
-	dictionary[ 'Special characters' ] = 'Спецсимволы';
-	dictionary[ 'Select column' ] = 'Выбрать столбец';
-	dictionary[ 'Select row' ] = 'Выбрать строку';
-}
