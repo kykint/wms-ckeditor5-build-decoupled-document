@@ -38,7 +38,6 @@ import Superscript from '@ckeditor/ckeditor5-basic-styles/src/superscript';
 import TableCellProperties from '@ckeditor/ckeditor5-table/src/tablecellproperties';
 import TableProperties from '@ckeditor/ckeditor5-table/src/tableproperties';
 import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
-import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
 import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
 import imageIcon from './save.svg';
 import ButtonView from '@ckeditor/ckeditor5-ui/src/button/buttonview';
@@ -108,7 +107,7 @@ DecoupledEditor.builtinPlugins = [
 	TableCellProperties,
 	TableProperties,
 	Essentials,
-	Paragraph,
+	// Paragraph,
 	SavePlugin
 ];
 
