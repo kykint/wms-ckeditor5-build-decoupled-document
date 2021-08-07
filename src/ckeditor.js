@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2014-2020, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2014-2021, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 import DecoupledEditorBase from '@ckeditor/ckeditor5-editor-decoupled/src/decouplededitor';
@@ -45,6 +45,9 @@ import SpecialCharactersMathematical from '@ckeditor/ckeditor5-special-character
 import SpecialCharactersArrows from '@ckeditor/ckeditor5-special-characters/src/specialcharactersarrows';
 import SpecialCharactersText from '@ckeditor/ckeditor5-special-characters/src/specialcharacterstext';
 import SpecialCharactersCurrency from '@ckeditor/ckeditor5-special-characters/src/specialcharacterscurrency';
+// import SourceEditing from '@ckeditor/ckeditor5-source-editing/src/sourceediting';
+// import GeneralHtmlSupport from '@ckeditor/ckeditor5-html-support/src/generalhtmlsupport';
+import HtmlEmbed from '@ckeditor/ckeditor5-html-embed/src/htmlembed';
 
 export default class DecoupledEditor extends DecoupledEditorBase {}
 
@@ -108,7 +111,10 @@ DecoupledEditor.builtinPlugins = [
 	TableProperties,
 	Essentials,
 	// Paragraph,
-	SavePlugin
+	SavePlugin,
+	HtmlEmbed
+	// SourceEditing,
+	// GeneralHtmlSupport
 ];
 
 // Editor configuration.
@@ -147,20 +153,16 @@ DecoupledEditor.defaultConfig = {
 			'pageBreak',
 			// 'link',
 			'subscript',
-			'superscript'
+			'superscript',
+			'htmlEmbed'
 		]
 	},
 	language: 'ru',
 	image: {
-		styles: [
-			'full',
-			'alignLeft',
-			'alignRight'
-		],
 		toolbar: [
-			'imageStyle:alignLeft',
-			'imageStyle:full',
-			'imageStyle:alignRight'
+			'imageStyle:inline',
+			'imageStyle:wrapText',
+			'imageStyle:breakText'
 		]
 	},
 	table: {
@@ -185,5 +187,23 @@ DecoupledEditor.defaultConfig = {
 			'Comic sans, Comic sans MS, cursive',
 			'Verdana, Geneva, sans-serif'
 		]
+	},
+	htmlSupport: {
+		allow: [
+			// Enables all HTML features.
+			{
+				name: /.*/,
+				attributes: true,
+				classes: true,
+				styles: true
+			}
+		]
 	}
 };
+{
+	// eslint-disable-next-line no-undef
+	const dictionary = window.CKEDITOR_TRANSLATIONS.ru.dictionary;
+	dictionary[ 'In line' ] = 'В тексте';
+	dictionary[ 'Wrap text' ] = 'Обтекать текст';
+	dictionary[ 'Break text' ] = 'Разрывать текст';
+}
