@@ -60,7 +60,8 @@ class SavePlugin extends Plugin {
 			buttonView.set( {
 				label: 'Сохранить',
 				icon: imageIcon,
-				tooltip: true
+				tooltip: true,
+				tooltipPosition: 'se'
 			} );
 			buttonView.on( 'execute', onSave );
 			return buttonView;
@@ -162,7 +163,9 @@ DecoupledEditor.defaultConfig = {
 		toolbar: [
 			'imageStyle:inline',
 			'imageStyle:wrapText',
-			'imageStyle:breakText'
+			'imageStyle:breakText',
+			'|',
+			'toggleImageCaption'
 		]
 	},
 	table: {
@@ -200,10 +203,3 @@ DecoupledEditor.defaultConfig = {
 		]
 	}
 };
-{
-	// eslint-disable-next-line no-undef
-	const dictionary = window.CKEDITOR_TRANSLATIONS.ru.dictionary;
-	dictionary[ 'In line' ] = 'В тексте';
-	dictionary[ 'Wrap text' ] = 'Обтекать текст';
-	dictionary[ 'Break text' ] = 'Разрывать текст';
-}
