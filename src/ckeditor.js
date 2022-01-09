@@ -69,6 +69,42 @@ class SavePlugin extends Plugin {
 	}
 }
 
+class IndentBlockFixed extends IndentBlock {
+	/**
+	 * Setups conversion for using offset indents.
+	 *
+	 * @private
+	 */
+	_setupConversionUsingOffset() {
+		const conversion = this.editor.conversion;
+		const marginProperty = 'text-indent'; // единственное изменение
+
+		conversion.for( 'upcast' ).attributeToAttribute( {
+			view: {
+				styles: {
+					[ marginProperty ]: /[\s\S]+/
+				}
+			},
+			model: {
+				key: 'blockIndent',
+				value: viewElement => viewElement.getStyle( marginProperty )
+			}
+		} );
+
+		conversion.for( 'downcast' ).attributeToAttribute( {
+			model: 'blockIndent',
+			view: modelAttributeValue => {
+				return {
+					key: 'style',
+					value: {
+						[ marginProperty ]: modelAttributeValue
+					}
+				};
+			}
+		} );
+	}
+}
+
 // Plugins to include in the build.
 DecoupledEditor.builtinPlugins = [
 	Alignment,
@@ -85,7 +121,7 @@ DecoupledEditor.builtinPlugins = [
 	ImageToolbar,
 	ImageUpload,
 	Indent,
-	IndentBlock,
+	IndentBlockFixed,
 	Italic,
 	// Link,
 	List,
