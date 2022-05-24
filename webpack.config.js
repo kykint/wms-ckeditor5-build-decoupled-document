@@ -57,6 +57,12 @@ module.exports = {
 		} )
 	],
 
+	resolve: {
+		alias: {
+			'ckeditor5-exports': path.resolve(__dirname, 'src/exports')
+		}
+	},
+
 	module: {
 		rules: [
 			{
@@ -64,7 +70,7 @@ module.exports = {
 				use: [ 'raw-loader' ]
 			},
 			{
-				test: /\.css$/,
+				test: /(\.css|.vanilla-css)$/,
 				use: [
 					{
 						loader: 'style-loader',

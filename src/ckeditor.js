@@ -48,6 +48,35 @@ import SpecialCharactersCurrency from '@ckeditor/ckeditor5-special-characters/sr
 // import SourceEditing from '@ckeditor/ckeditor5-source-editing/src/sourceediting';
 // import GeneralHtmlSupport from '@ckeditor/ckeditor5-html-support/src/generalhtmlsupport';
 import HtmlEmbed from '@ckeditor/ckeditor5-html-embed/src/htmlembed';
+import HyphensFactory from 'hyphens/Resources/Private/Scripts/HyphensEditor/src/plugins/hyphens';
+import imageSpace from './space_bar.svg';
+
+class HyphensPlugin extends HyphensFactory({}) {
+	init() {
+		super.init();
+		const {editor} = this;
+		editor.ui.componentFactory.add('insertNbspEntity', locale => {
+			const command = editor.commands.get( 'insertNbspEntity' );
+			const view = new ButtonView( locale );
+
+			view.set( {
+				label: 'Неразрывный пробел',
+				icon: imageSpace,
+				tooltip: true
+			} );
+
+			view.bind( 'isEnabled' ).to( command, 'isEnabled' );
+
+			// Execute the command.
+			this.listenTo( view, 'execute', () => {
+				editor.execute( 'insertNbspEntity' );
+				editor.editing.view.focus();
+			} );
+
+			return view;
+		});
+	}
+}
 
 export default class DecoupledEditor extends DecoupledEditorBase {}
 
@@ -149,7 +178,8 @@ DecoupledEditor.builtinPlugins = [
 	Essentials,
 	// Paragraph,
 	SavePlugin,
-	HtmlEmbed
+	HtmlEmbed,
+	HyphensPlugin
 	// SourceEditing,
 	// GeneralHtmlSupport
 ];
@@ -179,6 +209,7 @@ DecoupledEditor.defaultConfig = {
 			'numberedList',
 			'bulletedList',
 			'|',
+			'insertNbspEntity',
 			'indent',
 			'outdent',
 			'|',

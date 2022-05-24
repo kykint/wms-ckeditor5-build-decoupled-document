@@ -102,6 +102,7 @@
     "@ckeditor/ckeditor5-source-editing": "^34.0.0",
     "@ckeditor/ckeditor5-special-characters": "^34.0.0",
     "@ckeditor/ckeditor5-ui": "^34.0.0",
-    "@ckeditor/ckeditor5-upload": "^34.0.0"
+    "@ckeditor/ckeditor5-upload": "^34.0.0",
+    "hyphens": "github:Sebobo/Shel.Neos.Hyphens"
   }
 }
