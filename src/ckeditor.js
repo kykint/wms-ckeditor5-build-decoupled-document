@@ -49,32 +49,15 @@ import SpecialCharactersCurrency from '@ckeditor/ckeditor5-special-characters/sr
 // import GeneralHtmlSupport from '@ckeditor/ckeditor5-html-support/src/generalhtmlsupport';
 import HtmlEmbed from '@ckeditor/ckeditor5-html-embed/src/htmlembed';
 import HyphensFactory from 'hyphens/Resources/Private/Scripts/HyphensEditor/src/plugins/hyphens';
-import imageSpace from './space_bar.svg';
 
 class HyphensPlugin extends HyphensFactory({}) {
 	init() {
 		super.init();
 		const {editor} = this;
-		editor.ui.componentFactory.add('insertNbspEntity', locale => {
-			const command = editor.commands.get( 'insertNbspEntity' );
-			const view = new ButtonView( locale );
-
-			view.set( {
-				label: 'Неразрывный пробел',
-				icon: imageSpace,
-				tooltip: true
-			} );
-
-			view.bind( 'isEnabled' ).to( command, 'isEnabled' );
-
-			// Execute the command.
-			this.listenTo( view, 'execute', () => {
-				editor.execute( 'insertNbspEntity' );
-				editor.editing.view.focus();
-			} );
-
-			return view;
-		});
+		editor.keystrokes.set('CTRL+SHIFT+Space', 'insertNbspEntity');
+		editor.keystrokes.set('CTRL+Space', 'insertNbspEntity');
+		editor.keystrokes.set('CTRL+SHIFT+ALT+Space', 'insertShyEntity');
+		editor.keystrokes.set('CTRL+ALT+Space', 'insertShyEntity');
 	}
 }
 
@@ -209,7 +192,6 @@ DecoupledEditor.defaultConfig = {
 			'numberedList',
 			'bulletedList',
 			'|',
-			'insertNbspEntity',
 			'indent',
 			'outdent',
 			'|',
