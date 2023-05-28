@@ -39,7 +39,8 @@ import TableCellProperties from '@ckeditor/ckeditor5-table/src/tablecellproperti
 import TableProperties from '@ckeditor/ckeditor5-table/src/tableproperties';
 import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
 import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
-import imageIcon from './save.svg';
+import saveIcon from './save.svg';
+import orientationIcon from './orientation.svg';
 import ButtonView from '@ckeditor/ckeditor5-ui/src/button/buttonview';
 import SpecialCharactersMathematical from '@ckeditor/ckeditor5-special-characters/src/specialcharactersmathematical';
 import SpecialCharactersArrows from '@ckeditor/ckeditor5-special-characters/src/specialcharactersarrows';
@@ -49,6 +50,8 @@ import SpecialCharactersCurrency from '@ckeditor/ckeditor5-special-characters/sr
 // import GeneralHtmlSupport from '@ckeditor/ckeditor5-html-support/src/generalhtmlsupport';
 import HtmlEmbed from '@ckeditor/ckeditor5-html-embed/src/htmlembed';
 import HyphensFactory from 'hyphens/Resources/Private/Scripts/HyphensEditor/src/plugins/hyphens';
+
+const CHANGE_ORIENTATION_TITLE = 'Change orientation';
 
 class HyphensPlugin extends HyphensFactory({}) {
 	init() {
@@ -61,23 +64,44 @@ class HyphensPlugin extends HyphensFactory({}) {
 	}
 }
 
-export default class DecoupledEditor extends DecoupledEditorBase {}
+export default class DecoupledEditor extends DecoupledEditorBase {
+}
 
 class SavePlugin extends Plugin {
 	init() {
 		const editor = this.editor;
-		editor.ui.componentFactory.add( 'save', locale => {
-			const onSave = ( editor.config.get( 'savePlugin' ) || {} ).onSave || ( () => {} );
-			const buttonView = new ButtonView( locale );
-			buttonView.set( {
-				label: 'Сохранить',
-				icon: imageIcon,
+		editor.ui.componentFactory.add('save', locale => {
+			const onSave = (editor.config.get('savePlugin') || {}).onSave || (() => {
+			});
+			const buttonView = new ButtonView(locale);
+			buttonView.set({
+				label: locale.t('Save'),
+				icon: saveIcon,
 				tooltip: true,
 				tooltipPosition: 'se'
-			} );
-			buttonView.on( 'execute', onSave );
+			});
+			buttonView.on('execute', onSave);
 			return buttonView;
-		} );
+		});
+	}
+}
+
+class OrientationPlugin extends Plugin {
+	init() {
+		const editor = this.editor;
+		editor.ui.componentFactory.add('changeOrientation', locale => {
+			const onChange = (editor.config.get('orientationPlugin') || {}).onChange || (() => {
+			});
+			const buttonView = new ButtonView(locale);
+			buttonView.set({
+				label: locale.t(CHANGE_ORIENTATION_TITLE),
+				icon: orientationIcon,
+				tooltip: true,
+				tooltipPosition: 's'
+			});
+			buttonView.on('execute', onChange);
+			return buttonView;
+		});
 	}
 }
 
@@ -91,29 +115,29 @@ class IndentBlockFixed extends IndentBlock {
 		const conversion = this.editor.conversion;
 		const marginProperty = 'text-indent'; // единственное изменение
 
-		conversion.for( 'upcast' ).attributeToAttribute( {
+		conversion.for('upcast').attributeToAttribute({
 			view: {
 				styles: {
-					[ marginProperty ]: /[\s\S]+/
+					[marginProperty]: /[\s\S]+/
 				}
 			},
 			model: {
 				key: 'blockIndent',
-				value: viewElement => viewElement.getStyle( marginProperty )
+				value: viewElement => viewElement.getStyle(marginProperty)
 			}
-		} );
+		});
 
-		conversion.for( 'downcast' ).attributeToAttribute( {
+		conversion.for('downcast').attributeToAttribute({
 			model: 'blockIndent',
 			view: modelAttributeValue => {
 				return {
 					key: 'style',
 					value: {
-						[ marginProperty ]: modelAttributeValue
+						[marginProperty]: modelAttributeValue
 					}
 				};
 			}
-		} );
+		});
 	}
 }
 
@@ -161,6 +185,7 @@ DecoupledEditor.builtinPlugins = [
 	Essentials,
 	// Paragraph,
 	SavePlugin,
+	OrientationPlugin,
 	HtmlEmbed,
 	HyphensPlugin
 	// SourceEditing,
@@ -204,7 +229,8 @@ DecoupledEditor.defaultConfig = {
 			// 'link',
 			'subscript',
 			'superscript',
-			'htmlEmbed'
+			'htmlEmbed',
+			'changeOrientation'
 		]
 	},
 	language: 'ru',
@@ -252,3 +278,11 @@ DecoupledEditor.defaultConfig = {
 		]
 	}
 };
+
+const t = window.CKEDITOR_TRANSLATIONS = window.CKEDITOR_TRANSLATIONS || {};
+t.ru = t.ru || {dictionary: {}};
+t.en = t.en || {dictionary: {}};
+t.lt = t.lt || {dictionary: {}};
+t.ru.dictionary[CHANGE_ORIENTATION_TITLE] = 'Изменить ориентацию';
+t.en.dictionary[CHANGE_ORIENTATION_TITLE] = 'Change orientation';
+t.lt.dictionary[CHANGE_ORIENTATION_TITLE] = 'Keisti orientaciją';
