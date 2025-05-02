@@ -24,6 +24,7 @@ import {Table, TableToolbar, TableCellProperties, TableProperties, TableColumnRe
 import {Essentials} from '@ckeditor/ckeditor5-essentials';
 import {GeneralHtmlSupport} from '@ckeditor/ckeditor5-html-support';
 import {HtmlEmbed} from '@ckeditor/ckeditor5-html-embed';
+import {FindAndReplace} from '@ckeditor/ckeditor5-find-and-replace';
 import {ButtonView} from '@ckeditor/ckeditor5-ui';
 import {Plugin} from '@ckeditor/ckeditor5-core';
 import saveIcon from './save.svg';
@@ -124,6 +125,7 @@ DecoupledEditor.builtinPlugins = [
 	AutoLink,
 	BlockQuote,
 	Bold,
+	FindAndReplace,
 	FontFamily,
 	FontSize,
 	Heading,
@@ -202,6 +204,7 @@ DecoupledEditor.defaultConfig = {
 			'imageUpload',
 			'insertTable',
 			'|',
+			'findAndReplace',
 			'horizontalLine',
 			'specialCharacters',
 			'pageBreak',
